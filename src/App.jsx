@@ -19,12 +19,12 @@ const App = () => {
         return;
       }
 
-        setZombieFighters((prevFighters) =>
+      setZombieFighters((prevFighters) =>
           prevFighters.filter((f) => f.id !== fighter.id)
-        )
+      )
 
-        setTeam([...team, fighter])
-        setMoney(money - fighter.price)
+      setTeam([...team, fighter])
+      setMoney(money - fighter.price)
     }
 
     const handleRemoveFighter = (fighter) => {
@@ -122,10 +122,10 @@ const App = () => {
     <div>
       <h1>Zombie Fighters</h1>
       <h2>Money {money}</h2>
-
       <h2>Team Strength: {totalStrength}</h2>
       <h2>Team Agility: {totalAgility}</h2>
       <h2>Team</h2>
+
         {team.length > 0 ?
         team.map((fighter, index) => (
           <li key={index}>{fighter.name}
@@ -146,13 +146,13 @@ const App = () => {
       <ul>
       {zombieFighters.map((fighter, index) => (
        <li key={index}>
-       <p>Name: {fighter.name}</p>
-       <p>Price: {fighter.price}</p>
-       <p>Strength: {fighter.strength}</p>
-       <p>Agility: {fighter.agility}</p>
-       <img src={fighter.img} alt={fighter.name}  />
-       <br /> 
-       <button onClick={()=> handleAddFighter(fighter)}>Add</button>
+          <p>Name: {fighter.name}</p>
+          <p>Price: {fighter.price}</p>
+          <p>Strength: {fighter.strength}</p>
+          <p>Agility: {fighter.agility}</p>
+          <img src={fighter.img} alt={fighter.name}  />
+          <br /> 
+          <button onClick={()=> handleAddFighter(fighter)}>Add</button>
        </li>
       ))}
       </ul>
