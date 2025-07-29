@@ -9,8 +9,8 @@ const App = () => {
 
   const [team, setTeam] = useState([]);
   const [money, setMoney] = useState(100)
-
-
+  const totalStrength = team.reduce((sum, fighter) => sum + fighter.strength, 0)
+  const totalAgility = team.reduce((sum, fighter) => sum + fighter.agility, 0)
 
     
     const handleAddFighter = (fighter) => {
@@ -18,9 +18,19 @@ const App = () => {
         console.log('Not enough money')
         return;
       }
-      
-          setTeam([...team, fighter])
-          setMoney(money - fighter.price)
+
+        setZombieFighters((prevFighters) =>
+          prevFighters.filter((f) => f.id !== fighter.id)
+        )
+
+        setTeam([...team, fighter])
+        setMoney(money - fighter.price)
+    }
+
+    const handleRemoveFighter = (fighter) => {
+      setTeam((prevTeam => prevTeam.filter((f) => f.id !== fighter.id)))
+      setZombieFighters((prevFighters) => [...prevFighters, fighter])
+      setMoney((prevMoney) => prevMoney + fighter.price)
     }
 
 
@@ -112,6 +122,27 @@ const App = () => {
     <div>
       <h1>Zombie Fighters</h1>
       <h2>Money {money}</h2>
+
+      <h2>Team Strength: {totalStrength}</h2>
+      <h2>Team Agility: {totalAgility}</h2>
+      <h2>Team</h2>
+        {team.length > 0 ?
+        team.map((fighter, index) => (
+          <li key={index}>{fighter.name}
+            <p>Name: {fighter.name}</p>
+            <p>Price: {fighter.price}</p>
+            <p>Strength: {fighter.strength}</p>
+            <p>Agility: {fighter.agility}</p>
+            <img src={fighter.img} alt={fighter.name}  />
+            <button onClick={() => handleRemoveFighter(fighter)}>Remove</button>
+          </li>
+        ))
+        :
+        <p>Pick some team members!</p>       
+        }
+
+      <h2>Fighters</h2>
+      
       <ul>
       {zombieFighters.map((fighter, index) => (
        <li key={index}>
@@ -126,23 +157,7 @@ const App = () => {
       ))}
       </ul>
 
-      <ul>
-        <h2>My Team</h2>
-        {team.length > 0 ?
-        team.map((fighter, index) => (
-          <li key={index}>{fighter.name}
-            <p>Name: {fighter.name}</p>
-            <p>Price: {fighter.price}</p>
-            <p>Strength: {fighter.strength}</p>
-            <p>Agility: {fighter.agility}</p>
-            <img src={fighter.img} alt={fighter.name}  />
-          </li>
-        ))
-        :
-        <p>Pick some team members!</p>
-        }
-        
-      </ul>
+      
     
     </div>
   );
